@@ -260,4 +260,4 @@ $SCRIPT_DIRECTORY/report/build-report.sh
 # 
 
 echo ""
-echo "Completed scan '${SCAN_NAME}'"
+echo "Completed scan '${SCAN_NAME}' in directory ${SCAN_DIRECTORY}"
