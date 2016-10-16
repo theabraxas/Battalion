@@ -1,9 +1,5 @@
 #!/bin/bash
 
-LINKEDIN_RESULTS=${SCAN_DIRECTORY}/user/linkedin-users.txt
-PROBABLE_EMAILS=${SCAN_DIRECTORY}/user/probable-emails.txt
-COMPROMISED_EMAILS=${SCAN_DIRECTORY}/user/compromised-emails.txt
-
 echo "> Attempting to harvest users for company '${COMPANY_NAME}' from LinkedIn."
 
 $SCRIPT_DIRECTORY/user-scan/scripts/harvest-linkedin.sh "${COMPANY_NAME}" 100 > $LINKEDIN_RESULTS

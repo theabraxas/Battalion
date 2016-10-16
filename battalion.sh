@@ -120,6 +120,7 @@ do
     shift
 done
 
+export SCAN_NAME
 export DOMAIN_TARGET
 export SHODAN_API_KEY
 export COMPANY_NAME
@@ -142,12 +143,12 @@ if [ -z "${SCAN_DIRECTORY}" ]; then
     CONFIGURATION_ERROR=true
 fi
 
-if [ $DOMAIN_SCAN_ENABLED ] && [ -z "${DOMAIN_TARGET}" ]; then
+if $DOMAIN_SCAN_ENABLED  && [ -z "${DOMAIN_TARGET}" ]; then
     echo "[Error] The domain target must be configured for domain scans."
     CONFIGURATION_ERROR=true
 fi
 
-if [ $DOMAIN_SCAN_ENABLED ] && [ -z "${DOMAIN_SUBDOMAIN_LIST}" ]; then
+if $DOMAIN_SCAN_ENABLED && [ -z "${DOMAIN_SUBDOMAIN_LIST}" ]; then
     echo "[Error] A valid subdomain list file must be configured for domain scans."
     CONFIGURATION_ERROR=true
 fi
@@ -216,6 +217,10 @@ else
 fi
 
 if $USER_SCAN_ENABLED ; then
+    export LINKEDIN_RESULTS=${SCAN_DIRECTORY}/user/linkedin-users.txt
+    export PROBABLE_EMAILS=${SCAN_DIRECTORY}/user/probable-emails.txt
+    export COMPROMISED_EMAILS=${SCAN_DIRECTORY}/user/compromised-emails.txt
+
     $SCRIPT_DIRECTORY/user-scan/user-scan.sh &
     USER_SCAN_PID=$!
     echo -e "\t+ User scan is enabled and is running with PID ${USER_SCAN_PID}."
@@ -238,6 +243,15 @@ fi
 if $USER_SCAN_ENABLED ; then
     wait $USER_SCAN_PID
 fi
+
+# 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Build the report
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+
+export REPORT=$REPORT_DIRECTORY/report.md
+$SCRIPT_DIRECTORY/report/build-report.sh
 
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

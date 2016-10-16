@@ -27,4 +27,5 @@ handle_potential_email() {
 while read LINE
 do
     handle_potential_email "${LINE}"
+    sleep 1.6
 done < /dev/stdin
