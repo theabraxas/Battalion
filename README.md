@@ -92,3 +92,7 @@ not need to be created.
 Scans depend very much on the 'size' of the target, where the size is deteremined by the number of
 users and the number of detected domain records. Even for small targets scans will normally take a
 few minutes to complete.
+
+# Disclaimer
+
+This utility has been created purely for the purposes of research and for improving defense, and is not intended to be used to attack systems except where explicitly authorized. Project maintainers are not responsible or liable for misuse of the software. Use responsibly.
