@@ -13,9 +13,9 @@
 # - fl_underscore => FirstName_LastName@domain
 # - fl_dash => FirstName-LastName@domain
 #
-# Last Nmae followed by First Name
+# Last Namee followed by First Name
 # ==============================================
-# - Same as FL, but reversed.
+# - Same as fl, but reversed.
 #
 # Initials
 # ==============================================
