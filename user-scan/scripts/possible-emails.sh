@@ -3,9 +3,9 @@
 # Given a domain and a list of names, generate a set of potential emails
 # for every name. The output format is:
 #
-# probable_email_type|email
+# possible_email_type|email
 #
-# There are 10 probable email types.
+# There are 10 possible email types.
 #
 # First Name followed by Last Name
 # ==============================================
@@ -51,7 +51,7 @@ handle_name() {
 
 while read LINE
 do
-    # Process an individual line. For the name, generate all probable emails.
+    # Process an individual line. For the name, generate all possible emails.
     IFS=' ' read -r -a FULL_NAME <<< "${LINE}"
     handle_name "${FULL_NAME[0]}" "${FULL_NAME[1]}"
 done < /dev/stdin

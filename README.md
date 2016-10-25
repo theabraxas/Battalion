@@ -87,7 +87,12 @@ a directory called `report` which will contain a Markdown report summarizing and
 All of these directories will be created at the location specified by the `--out` parameter and do
 not need to be created.
 
-## Expected Scan Time
+## Expected Scan Time (User)
+
+The current scan time for the user scan is rather large -- over 20 minutes. We're currently working
+on a way to improve this by changing how Battalion identifies email addresses.
+
+## Expected Scan Time (Domain)
 
 Scans depend very much on the 'size' of the target, where the size is deteremined by the number of
 users and the number of detected domain records. Even for small targets scans will normally take a

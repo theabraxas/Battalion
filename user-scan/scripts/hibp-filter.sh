@@ -1,13 +1,14 @@
 #!/bin/bash
 #
-# Given a set of probable emails, attempt to narrow down the list using
-# HaveIBeenPwned -- if any emails match, consider them "valid".
+# Given a set of possible emails, attempt to narrow down the list using
+# HaveIBeenPwned -- if any emails match, consider them "valid" and select
+# that format in general.
 #
 # The input should look like:
 #
-# probable_email_type|email
+# possible_email_type|email
 #
-# Please see the probable-emails.sh script for more information on this
+# Please see the possible-emails.sh script for more information on this
 # format. Matched emails will output their type.
 
 HIBP_REQUEST="https://haveibeenpwned.com/api/v2/breachedaccount/"
@@ -18,14 +19,24 @@ handle_potential_email() {
     STYLE="${DESCRIPTOR[0]}"
     EMAIL="${DESCRIPTOR[1]}"
 
-    RESULT=`curl -s ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS}`
-    if [ ! -z "${RESULT// }" ]; then
-        echo "${1}"
+    RESULT=`curl -s -w "\n\n<%{http_code}>" ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS}`
+    STATUS_CODE=$(echo $RESULT | tail -n 1)
+    BODY=$(echo $RESULT | head -n -2)
+
+    if [ "$STATUS_CODE" = "<200>" ] && [ ! -z "${BODY// }" ]; then
+        echo "$STYLE"
     fi
 }
 
 while read LINE
 do
-    handle_potential_email "${LINE}"
-    sleep 1.6
+    EMAIL_RESULT=$(handle_potential_email "${LINE}")
+
+    if [ -z "$EMAIL_RESULT" ]; then
+        sleep 1.6
+    else
+        # Break on the first result. This tells us the "Valid format" to select
+        echo $EMAIL_RESULT
+        exit 0
+    fi
 done < /dev/stdin
