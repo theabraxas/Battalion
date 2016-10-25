@@ -218,6 +218,8 @@ fi
 
 if $USER_SCAN_ENABLED ; then
     export LINKEDIN_RESULTS=${SCAN_DIRECTORY}/user/linkedin-users.txt
+    export POSSIBLE_EMAILS=${SCAN_DIRECTORY}/user/possible-emails.txt
+    export COMPROMISED_STYLE=${SCAN_DIRECTORY}/user/compromised-style.txt
     export PROBABLE_EMAILS=${SCAN_DIRECTORY}/user/probable-emails.txt
     export COMPROMISED_EMAILS=${SCAN_DIRECTORY}/user/compromised-emails.txt
 

@@ -7,14 +7,23 @@ $SCRIPT_DIRECTORY/user-scan/scripts/harvest-linkedin.sh "${COMPANY_NAME}" 100 > 
 echo -e "\t+ Found $(cat $LINKEDIN_RESULTS | wc -l) users."
 echo ""
 
-touch $PROBABLE_EMAILS
-$SCRIPT_DIRECTORY/user-scan/scripts/probable-emails.sh "${EMAIL_DOMAIN}" \
+touch $POSSIBLE_EMAILS
+$SCRIPT_DIRECTORY/user-scan/scripts/possible-emails.sh "${EMAIL_DOMAIN}" \
     < $LINKEDIN_RESULTS \
-    > $PROBABLE_EMAILS
+    > $POSSIBLE_EMAILS
 
-echo "> Attempting to identify compromised emails based on HaveIBeenPwned."
+echo "> Attempting to identify compromised email style based on HaveIBeenPwned."
 
-touch $COMPROMISED_EMAILS
+touch $COMPROMISED_STYLE
 $SCRIPT_DIRECTORY/user-scan/scripts/hibp-filter.sh \
-    < $PROBABLE_EMAILS \
-    > $COMPROMISED_EMAILS
+    < $POSSIBLE_EMAILS \
+    > $COMPROMISED_STYLE
+
+touch $PROBABLE_EMAILS
+touch $COMPROMISED_EMAILS
+if [ -s $COMPROMISED_STYLE ]; then
+    cat $POSSIBLE_EMAILS | grep $COMPROMISED_STYLE > $PROBABLE_EMAILS
+    cat $PROBABLE_EMAILS \
+        | $SCRIPT_DIRECTORY/user-scan/scripts/hibp-scan.sh \
+        > $COMPROMISED_EMAILS
+fi
