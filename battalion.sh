@@ -18,6 +18,7 @@ usage() {
     echo "    --email-domain       <domain>  Used to set an email domain name (default is domain name)."
     echo "    --nmap                         If this flag is set, Nmap scanning is added to the domain scan."
     echo "    --shodan             <api key> Sets a Shodan API Key and adds Shodan to the domain scan."
+    echo "    --hunter             <api key> Sets a Hunter API Key and enables Hunter in the User scan."
     echo "    --timeout-http       <seconds> Configure the timeout in seconds for HTTP detection."
     echo "    --timeout-eyewitness <seconds> Configure the timeout in seconds for EyeWitness."
     echo ""
@@ -61,10 +62,10 @@ do
 
     case $KEY in
         --disable-domain)
-            DOMAIN_SCAN_ENABLED=false
+            export DOMAIN_SCAN_ENABLED=false
             ;;
         --disable-user)
-            USER_SCAN_ENABLED=false
+            export USER_SCAN_ENABLED=false
             ;;
         --name)
             SCAN_NAME="$2"
@@ -94,8 +95,13 @@ do
             NMAP_ENABLED=true
             ;;
         --shodan)
-            SHODAN_ENABLED=true
+            export SHODAN_ENABLED=true
             SHODAN_API_KEY="$2"
+            shift
+            ;;
+        --hunter)
+            export HUNTER_ENABLED=true
+            HUNTER_API_KEY="$2"
             shift
             ;;
         --company)
@@ -108,7 +114,7 @@ do
             ;;
         --help)
             usage
-            exit 1
+            exit 0
             ;;
         *)
             echo "Unrecognized parameter '$1'"
@@ -122,12 +128,14 @@ done
 export SCAN_NAME
 export DOMAIN_TARGET
 export SHODAN_API_KEY
+export HUNTER_API_KEY
 export COMPANY_NAME
 export DOMAIN_SUBDOMAIN_LIST=${DOMAIN_SUBDOMAIN_LIST:-$BATTALION_DNSRECON_HOME/subdomains-top1mil-20000.txt}
 export DOMAIN_HTTP_SCAN_TIMEOUT=${DOMAIN_HTTP_SCAN_TIMEOUT:-3}
 export EYEWITNESS_TIMEOUT=${EYEWITNESS_TIMEOUT:-15}
 export NMAP_ENABLED=${NMAP_ENABLED:-false}
 export SHODAN_ENABLED=${SHODAN_ENABLED:-false}
+export HUNTER_ENABLED=${HUNTER_ENABLED:-false}
 export EMAIL_DOMAIN=${EMAIL_DOMAIN:-$DOMAIN_TARGET}
 
 CONFIGURATION_ERROR=false
@@ -142,7 +150,7 @@ if [ -z "${SCAN_DIRECTORY}" ]; then
     CONFIGURATION_ERROR=true
 fi
 
-if $DOMAIN_SCAN_ENABLED  && [ -z "${DOMAIN_TARGET}" ]; then
+if $DOMAIN_SCAN_ENABLED && [ -z "${DOMAIN_TARGET}" ]; then
     echo "[Error] The domain target must be configured for domain scans."
     CONFIGURATION_ERROR=true
 fi

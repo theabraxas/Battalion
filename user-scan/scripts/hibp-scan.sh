@@ -15,13 +15,15 @@ handle_potential_email() {
     EMAIL="${DESCRIPTOR[1]}"
 
     RESULT=`curl -s -w "\n\n<%{http_code}>" ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS}`
-    STATUS_CODE=$(echo $RESULT | tail -n 1)
-    BODY=$(echo $RESULT | head -n -2)
+    STATUS_CODE="$(echo "$RESULT" | tail -n 1)"
+    BODY="$(echo "$RESULT" | head -n -2)"
 
     if [ "$STATUS_CODE" = "<200>" ] && [ ! -z "${BODY// }" ]; then
-        echo "${1}"
+        echo "{\"email\":\"$EMAIL\",\"breaches\":$BODY}"
     else
         if [ "$STATUS_CODE" = "<429>" ]; then
+            >&2 echo "Exceeded acceptable rate for HaveIBeenPwned, waiting 5 seconds to recover."
+
             # Immediately sleep for 5 seconds if we manage to exceed our rate.
             # We want to be polite to HIBP, so give it some time to cool down.
             sleep 5
@@ -33,5 +35,7 @@ while read LINE
 do
     handle_potential_email "${LINE}"
     print_progress
+
+    # Ensure that we keep this cooldown up-to-date with what HIBP requires.
     sleep 1.6
 done < /dev/stdin
