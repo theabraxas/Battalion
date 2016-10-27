@@ -1,5 +1,12 @@
 Battalion
 =========
+Battalion is a tool designed to automate a huge portion of a standard pentest. By supplying only a domain name and website site Battalion goes through the various passive and active reconaissance tasks, enumerates publicly accessible sites and services, identifies potential misconfigurations or vulnerable technologies, discoves and identifies breached accounts, build reports, and much more.
+
+Ultimately Battalion will automate beyond reconaissance and go so far as to trigger phishing campaigns, automatically exploit some discovered vulnerabilities, and come with post-exploitation options.
+
+Try out Battalion and send us any feedback! https://github.com/eidolonpg and I are excited to build out this tool and make it as comprehensive and efficient as possible!
+
+
 
 # Quick Setup
 
