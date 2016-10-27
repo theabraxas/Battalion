@@ -242,10 +242,12 @@ echo ""
 
 if $DOMAIN_SCAN_ENABLED ; then
     wait $DOMAIN_SCAN_PID
+    echo "Domain scan complete."
 fi
 
 if $USER_SCAN_ENABLED ; then
     wait $USER_SCAN_PID
+    echo "User scan complete."
 fi
 
 # 
