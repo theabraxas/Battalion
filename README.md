@@ -10,43 +10,46 @@ Try out Battalion and send us any feedback! https://github.com/eidolonpg and I a
 
 # Quick Setup
 
-Battalion depends on a number of other tools and many of these tools function from cloned Git repositories.
+Battalion depends on a number of other tools and many of these tools function from cloned Git repositories. Here is how to get started.
 
-The following tools are leveraged by Battalion:
-
-- [dnsrecon](https://github.com/darkoperator/dnsrecon)
-- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
-- [Nmap](https://nmap.org/)
-- [TheHarvester](https://github.com/laramies/theHarvester)
-- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
-- [whois](https://github.com/weppos/whois)
-- [wpscan](https://github.com/wpscanteam/wpscan)
-
-These should be installed manually:
+Manually configure these tools on your system:
 
 - [Nmap](https://nmap.org/)
 - [whois](https://github.com/weppos/whois)
 
-These need to be cloned:
-
-- [dnsrecon](https://github.com/darkoperator/dnsrecon)
-- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
-- [TheHarvester](https://github.com/laramies/theHarvester)
-- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
-- [wpscan](https://github.com/wpscanteam/wpscan)
-
-## Installed Dependencies
+The following command will prepare these tools on your system. This will not work on all systems.
 
 ```bash
 apt-get install nmap
 gem install whois
 ```
 
-## GitHub Dependencies
+In addition to the above tools there are several more Battalion utilizes to run properly. Below are the tools which can be installed manually or with the [download-tools](download-tools.sh) script.
+
+The following tools to be cloned:
+
+- [dnsrecon](https://github.com/darkoperator/dnsrecon)
+- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
+- [TheHarvester](https://github.com/laramies/theHarvester)
+- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
+- [wpscan](https://github.com/wpscanteam/wpscan)
 
 Battalion provides a script [download-tools](download-tools.sh) to automatically clone all of the required
 GitHub repositories. Additional setup may be required. By default Battalion knows where to look for tools cloned
 in this manner.
+
+Once cloned, navigate in to each directory and install the requirements for each tool and validate the tool works. If these tools are all working, Battalion will run properly.
+
+The following is the complete list of 3rd party tools leveraged by Battalion:
+
+- [dnsrecon](https://github.com/darkoperator/dnsrecon)
+- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
+- [Nmap](https://nmap.org/)
+- [TheHarvester](https://github.com/laramies/theHarvester)
+- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
+- [whois](https://github.com/weppos/whois)
+- [wpscan](https://github.com/wpscanteam/wpscan)
+
 
 ## Using your own tool installations
 
