@@ -3,6 +3,13 @@
 HIBP_REQUEST="https://haveibeenpwned.com/api/v2/breachedaccount/"
 HIBP_PARAMS="?truncateResponse=True"
 
+CURRENT_COUNT=0
+
+print_progress() {
+    let CURRENT_COUNT=CURRENT_COUNT+1
+    echo -ne "\rScanned $CURRENT_COUNT emails." >&2
+}
+
 handle_potential_email() {
     IFS='|' read -r -a DESCRIPTOR <<< "${1}"
     EMAIL="${DESCRIPTOR[1]}"
@@ -25,5 +32,6 @@ handle_potential_email() {
 while read LINE
 do
     handle_potential_email "${LINE}"
+    print_progress
     sleep 1.6
 done < /dev/stdin
