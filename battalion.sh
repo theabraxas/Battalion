@@ -65,7 +65,6 @@ do
             ;;
         --disable-user)
             USER_SCAN_ENABLED=false
-            echo "+ Disabling the user scan."
             ;;
         --name)
             SCAN_NAME="$2"
