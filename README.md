@@ -35,10 +35,9 @@ The following tools to be cloned:
 - [wpscan](https://github.com/wpscanteam/wpscan)
 
 Battalion provides a script [download-tools](download-tools.sh) to automatically clone all of the required
-GitHub repositories. Additional setup may be required. By default Battalion knows where to look for tools cloned
-in this manner.
+GitHub repositories. Additional setup is required after cloning the tools. Using this script allows Battalion to know where to look for the toolsr.
 
-Once cloned, navigate in to each directory and install the requirements for each tool and validate the tool works. If these tools are all working, Battalion will run properly.
+Once cloned, navigate in to each directory and install the requirements for each tool and validate the tool works. If these tools are all working, Battalion will run properly. This will typically just involve going in to each tool directory and running: `pip install -r requirements.txt`
 
 The following is the complete list of 3rd party tools leveraged by Battalion:
 
