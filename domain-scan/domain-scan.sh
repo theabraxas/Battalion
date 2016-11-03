@@ -106,7 +106,7 @@ if $NMAP_ENABLED ; then
     echo ""
     echo "> Executing Nmap scan on all subdomains."
 
-    cat $SUBDOMAIN_LIST | uniq -i | $DOMAIN_SCAN_SCRIPTS/nmap-basic.sh $NMAP_DIRECTORY
+    cat $SUBDOMAIN_LIST  | jq -M -r -c '.subdomains | .[]' | uniq -i | $DOMAIN_SCAN_SCRIPTS/nmap-basic.sh $NMAP_DIRECTORY
 
     echo -e "\t- Produced $(ls -1 ${NMAP_DIRECTORY} | wc -l) NMap reports."
 else
@@ -147,7 +147,7 @@ if $SHODAN_ENABLED ; then
     echo ""
     echo "> Executing Shodan scan on $(cat $IP_ADDRESS_LIST | wc -l) IP addresses."
 
-    cat $IP_ADDRESS_LIST | $DOMAIN_SCAN_SCRIPTS/shodan.sh $SHODAN_DIRECTORY "${SHODAN_API_KEY}"
+    cat $IP_ADDRESS_LIST | jq -M -r -c '.primaryIPAddresses | .[]' | $DOMAIN_SCAN_SCRIPTS/shodan.sh $SHODAN_DIRECTORY "${SHODAN_API_KEY}"
 
     echo -e "\t- Produced $(ls -1 $SHODAN_DIRECTORY | wc -l) Shodan reports."
 else
