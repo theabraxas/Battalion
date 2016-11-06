@@ -51,6 +51,7 @@ The following is the complete list of 3rd party tools leveraged by Battalion:
 
 ## Install on Kali Linux
 ```
+apt-get install jq
 git clone https://github.com/battalion
 cd battalion
 ./download-tools.sh
