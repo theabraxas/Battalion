@@ -49,6 +49,52 @@ The following is the complete list of 3rd party tools leveraged by Battalion:
 - [whois](https://github.com/weppos/whois)
 - [wpscan](https://github.com/wpscanteam/wpscan)
 
+## Install on Kali Linux
+```
+git clone https://github.com/battalion
+cd battalion
+./download-tools.sh
+cd tools
+
+#dnsrecon
+
+pip install -r requirements.txt
+#Currently there is an issue (11/5/2016) which prevents `./dnsrecon` from running unless -t is specified.
+#Test functionality by using the following to trigger the help message
+./dnsrecon -t
+cd ..
+
+#EyeWitness
+cd EyeWitness/setup
+./setup.sh
+cd ..
+#Test functionality by typing the following to trigger the help message
+./EyeWitness.py
+cd ..
+
+#theHarvester
+chmod +x theHarvester.py
+#Test functionality by typing the following to trigger the help message
+./theHarvester.py
+cd ..
+
+#WhatWeb
+#This should work by default. Test functionality by typing the following to trigger the help message
+./whatweb
+cd ..
+
+#wpscan
+sudo apt-get install libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev
+#Test functionality by typing the following to trigger the help message
+./wpscan.rb
+cd ../..
+
+#Ruby Whois
+gem install whois
+```
+
+Battalion should now be ready to run on your Kali system!
+
 
 ## Using your own tool installations
 
