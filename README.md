@@ -86,6 +86,8 @@ cd ..
 
 #wpscan
 sudo apt-get install libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev
+cd wpscan
+unzip data.zip
 #Test functionality by typing the following to trigger the help message
 ./wpscan.rb
 cd ../..
