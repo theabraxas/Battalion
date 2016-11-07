@@ -138,6 +138,11 @@ Battalion also supports configuring the locations of tools via environment varia
 - `--disable-user`: Disable the user scan
 - `--disable-domain`: Disable the domain scan
 
+## Sample Scan
+
+`./battalion.sh --name TestScan --out /path/to/destination/directory --company "Company Name" --domain "example.com" --nmap --shodan "shodanAPIkey"`
+This would create a new scan called 'TestScan' and put the results of the scan at /path/to/destionation/directory/<files>. It would scan `example.com` with the domain-scan features and do a user-scan on "Company Name" the NMAP and Shodan modules are enabled in this sample.
+
 # Scan Output
 
 Battalion produces a number of directories which help categorize raw output. It also produces
