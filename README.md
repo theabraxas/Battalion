@@ -21,6 +21,7 @@ The following command will prepare these tools on your system. This will not wor
 
 ```bash
 apt-get install nmap
+apt-get install jq
 gem install whois
 ```
 
