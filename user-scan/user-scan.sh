@@ -12,6 +12,7 @@ echo ""
 
 # Generate a list of possible emails from our LinkedIn results.
 # See the script for more information, we just combine names in different ways.
+echo "> Populating user emails using the domain $EMAIL_DOMAIN"
 touch $POSSIBLE_EMAILS
 $USER_SCAN_SCRIPTS/possible-emails.sh "$EMAIL_DOMAIN" \
     < $LINKEDIN_RESULTS \
@@ -43,20 +44,27 @@ fi
 touch $PROBABLE_EMAILS
 touch $COMPROMISED_EMAILS
 
+# Append the Battalion standard email list to the probable emails so that they always get
+# scanned. It's a small list of non-user accounts that have a good chance of existing.
+$USER_SCAN_SCRIPTS/build-emails-from-names.sh $SCRIPT_DIRECTORY/user-scan/standard-email-list > $PROBABLE_EMAILS
+
 if [ -s $COMPROMISED_STYLE ]; then
     echo -e "\t+ Identified the style '$(cat $COMPROMISED_STYLE)'\n"
 
     # Filter the possible emails by the pattern that we determined to be the most probable.
     # Next we'll run every email matching the pattern through HIBP in an attempt to identify
     # any compromised emails.
-    cat $POSSIBLE_EMAILS | grep -F "$(cat $COMPROMISED_STYLE)" > $PROBABLE_EMAILS
-
-    echo -e "> Identified $(cat $PROBABLE_EMAILS | wc -l) probable emails."
-    echo -e "> Scanning probable emails using HaveIBeenPwned.\n"
-
-    cat $PROBABLE_EMAILS \
-        | $USER_SCAN_SCRIPTS/hibp-scan.sh \
-        > $COMPROMISED_EMAILS
-
-    echo ""
+    cat $POSSIBLE_EMAILS \
+        | grep -F "$(cat $COMPROMISED_STYLE)" \
+        | cut -d\| -f 2 \
+        >> $PROBABLE_EMAILS
 fi
+
+echo -e "> Identified $(cat $PROBABLE_EMAILS | wc -l) probable emails."
+echo -e "> Scanning probable emails using HaveIBeenPwned.\n"
+
+cat $PROBABLE_EMAILS \
+    | $USER_SCAN_SCRIPTS/hibp-scan.sh \
+    > $COMPROMISED_EMAILS
+
+echo ""
