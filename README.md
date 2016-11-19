@@ -130,7 +130,9 @@ Battalion also supports configuring the locations of tools via environment varia
 - `--email-domain <domain name>`: Allows a different email domain to be configured
 - `--subdomain-list <file>`: Specify a file that provides potential subdomains
 - `--nmap`: Enable light touch nmap scanning of subdomains
+- `--nmap-aggressive`: This is a VERY intense scan on each subdomain, approx ~10 minutes per subdomain. VERY LONG TO RUN.
 - `--shodan <api key>`: Specify a Shodan API key and enables a Shodan scan
+- `--hunter <api key>`: Sets a Hunter.io API Key and enables Hunter in the user scan. This will vastly speed up the user scan!
 - `--timeout-http <seconds>`: Specify a timeout in seconds for HTTP detection
 - `--timeout-eyewitness <seconds>`: Specify a timeout in seconds for EyeWitness individual scans
 

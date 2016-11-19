@@ -17,6 +17,7 @@ usage() {
     echo "    --subdomain-list     <file>    File containing subdomains to verify."
     echo "    --email-domain       <domain>  Used to set an email domain name (default is domain name)."
     echo "    --nmap                         If this flag is set, Nmap scanning is added to the domain scan."
+    echo "    --nmap-aggressive              If this flag is set, aggressive Nmap scanning is enabled for the domain."
     echo "    --shodan             <api key> Sets a Shodan API Key and adds Shodan to the domain scan."
     echo "    --hunter             <api key> Sets a Hunter API Key and enables Hunter in the User scan."
     echo "    --timeout-http       <seconds> Configure the timeout in seconds for HTTP detection."
@@ -94,6 +95,9 @@ do
         --nmap)
             NMAP_ENABLED=true
             ;;
+        --nmap-aggressive)
+            NMAP_AGGRESSIVE_ENABLED=true
+            ;;
         --shodan)
             export SHODAN_ENABLED=true
             SHODAN_API_KEY="$2"
@@ -134,6 +138,7 @@ export DOMAIN_SUBDOMAIN_LIST=${DOMAIN_SUBDOMAIN_LIST:-$BATTALION_DNSRECON_HOME/s
 export DOMAIN_HTTP_SCAN_TIMEOUT=${DOMAIN_HTTP_SCAN_TIMEOUT:-3}
 export EYEWITNESS_TIMEOUT=${EYEWITNESS_TIMEOUT:-15}
 export NMAP_ENABLED=${NMAP_ENABLED:-false}
+export NMAP_AGGRESSIVE_ENABLED=${NMAP_AGGRESSIVE_ENABLED:-false}
 export SHODAN_ENABLED=${SHODAN_ENABLED:-false}
 export HUNTER_ENABLED=${HUNTER_ENABLED:-false}
 export EMAIL_DOMAIN=${EMAIL_DOMAIN:-$DOMAIN_TARGET}
