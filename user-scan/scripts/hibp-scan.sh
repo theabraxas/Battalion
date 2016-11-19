@@ -11,8 +11,7 @@ print_progress() {
 }
 
 handle_potential_email() {
-    IFS='|' read -r -a DESCRIPTOR <<< "${1}"
-    EMAIL="${DESCRIPTOR[1]}"
+    EMAIL="$1"
 
     RESULT=`curl -s -w "\n\n<%{http_code}>" ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS}`
     STATUS_CODE="$(echo "$RESULT" | tail -n 1)"
