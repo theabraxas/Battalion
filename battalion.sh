@@ -209,9 +209,12 @@ build_dir "${REPORT_DIRECTORY}"
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
+# First acquire the Host IP address for reporting purposes.
+export HOST_IP_ADDRESS="$(curl -s ipinfo.io | grep ip | cut -d\" -f4)"
+
 echo ">> Battalion <<"
 echo ""
-echo "Running scan '${SCAN_NAME}'"
+echo "Running scan '$SCAN_NAME' from IP address $HOST_IP_ADDRESS"
 echo ''
 
 export DOMAIN_SCAN_SCRIPTS=$SCRIPT_DIRECTORY/domain-scan/scripts
