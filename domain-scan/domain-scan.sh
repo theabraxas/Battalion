@@ -106,9 +106,18 @@ if $NMAP_ENABLED ; then
     echo ""
     echo "> Executing Nmap scan on all subdomains."
 
-    cat $SUBDOMAIN_LIST  | jq -M -r -c '.subdomains | .[]' | uniq -i | $DOMAIN_SCAN_SCRIPTS/nmap-basic.sh $NMAP_DIRECTORY
+    cat $SUBDOMAIN_LIST | jq -M -r -c '.subdomains | .[]' | uniq -i | $DOMAIN_SCAN_SCRIPTS/nmap-basic.sh $NMAP_DIRECTORY
 
-    echo -e "\t- Produced $(ls -1 ${NMAP_DIRECTORY} | wc -l) NMap reports."
+    echo -e "\t- Produced $(ls -1 ${NMAP_DIRECTORY} | wc -l) Nmap reports."
+
+elif $NMAP_AGGRESSIVE_ENABLED ; then
+    echo ""
+    echo "> Executing Aggressive Nmap scan on all subdomains."
+
+    cat $SUBDOMAIN_LIST | jq -M -r -c '.subdomains | .[]' | uniq -i | $DOMAIN_SCAN_SCRIPTS/nmap-aggressive.sh $NMAP_DIRECTORY
+
+    echo -e "\t- Produced $(ls -1 ${NMAP_DIRECTORY} | wc -l) Nmap reports."
+
 else
     echo ""
     echo "! Nmap disabled for this scan"
