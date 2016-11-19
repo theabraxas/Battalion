@@ -6,7 +6,7 @@
 #
 # The input should look like:
 #
-# possible_email_type|email
+# email_style|email
 #
 # Please see the possible-emails.sh script for more information on this
 # format. Matched emails will output their type.
@@ -26,9 +26,9 @@ handle_potential_email() {
     STYLE="${DESCRIPTOR[0]}"
     EMAIL="${DESCRIPTOR[1]}"
 
-    RESULT=`curl -s -w "\n\n<%{http_code}>" ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS}`
-    STATUS_CODE=$(echo $RESULT | tail -n 1)
-    BODY=$(echo $RESULT | head -n -2)
+    RESULT="$(curl -s -w "\n\n<%{http_code}>" ${HIBP_REQUEST}${EMAIL}${HIBP_PARAMS})"
+    STATUS_CODE="$(echo $RESULT | tail -n 1)"
+    BODY="$(echo "$RESULT" | head -n -2)"
 
     if [ "$STATUS_CODE" = "<200>" ] && [ ! -z "${BODY// }" ]; then
         echo "$STYLE"
@@ -37,7 +37,7 @@ handle_potential_email() {
 
 while read LINE
 do
-    EMAIL_RESULT=$(handle_potential_email "${LINE}")
+    EMAIL_RESULT="$(handle_potential_email "${LINE}")"
     print_progress
 
     if [ -z "$EMAIL_RESULT" ]; then

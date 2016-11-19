@@ -3,26 +3,20 @@
 # Given a domain and a list of names, generate a set of potential emails
 # for every name. The output format is:
 #
-# possible_email_type|email
+# email_style|email
 #
-# There are 10 possible email types.
-#
-# First Name followed by Last Name
+# About Email Styles
 # ==============================================
-# - fl_dot => FirstName.LastName@domain
-# - fl_underscore => FirstName_LastName@domain
-# - fl_dash => FirstName-LastName@domain
+# Email styles are different combinations of name parts. We utilize four variables:
+# 
+# - {first} = First name
+# - {last}  = Last name
+# - {f}     = First letter of first name
+# - {l}     = First letter of last name
 #
-# Last Namee followed by First Name
-# ==============================================
-# - Same as fl, but reversed.
+# Those variables might be mixed with common characters as well. For instances we
+# might have {f}{last}@domain.com or {first}-{last}@domain.com
 #
-# Initials
-# ==============================================
-# - fil => FirstInitialLastName@domain
-# - lif => LastInitialFirstName@domain
-# - lfi => LastNameFirstInitial@domain
-# - fli => FristNameLastInitial@domain
 
 EMAIL_DOMAIN=$1
 
@@ -32,21 +26,23 @@ handle_name() {
     FIRST_LETTER=${1:0:1}
     LAST_LETTER=${2:0:1}
 
-    # First name + Last name
-    echo "fl_dot|${FIRST_NAME}.${LAST_NAME}@${EMAIL_DOMAIN}"
-    echo "fl_underscore|${FIRST_NAME}_${LAST_NAME}@${EMAIL_DOMAIN}"
-    echo "fl_dash|${FIRST_NAME}-${LAST_NAME}@${EMAIL_DOMAIN}"
+    # First name followed by last name
+    echo "{first}.{last}|${FIRST_NAME}.${LAST_NAME}@${EMAIL_DOMAIN}"
+    echo "{first}_{last}|${FIRST_NAME}_${LAST_NAME}@${EMAIL_DOMAIN}"
+    echo "{first}-{last}|${FIRST_NAME}-${LAST_NAME}@${EMAIL_DOMAIN}"
 
-    # Last name + First name
-    echo "lf_dot|${LAST_NAME}.${FIRST_NAME}@${EMAIL_DOMAIN}"
-    echo "lf_underscore|${LAST_NAME}_${FIRST_NAME}@${EMAIL_DOMAIN}"
-    echo "lf_dash|${LAST_NAME}-${FIRST_NAME}@${EMAIL_DOMAIN}"
+    # Last name followed by first name
+    echo "{last}.{first}|${LAST_NAME}.${FIRST_NAME}@${EMAIL_DOMAIN}"
+    echo "{last}_{first}|${LAST_NAME}_${FIRST_NAME}@${EMAIL_DOMAIN}"
+    echo "{last}-{first}|${LAST_NAME}-${FIRST_NAME}@${EMAIL_DOMAIN}"
 
-    # First and last initials
-    echo "fil|${FIRST_LETTER}${LAST_NAME}@${EMAIL_DOMAIN}"
-    echo "lif|${LAST_LETTER}${FIRST_NAME}@${EMAIL_DOMAIN}"
-    echo "lfi|${LAST_NAME}${FIRST_LETTER}@${EMAIL_DOMAIN}"
-    echo "fli|${FIRST_NAME}${LAST_LETTER}@${EMAIL_DOMAIN}"
+    # Letter followed by name
+    echo "{f}{last}|${FIRST_LETTER}${LAST_NAME}@${EMAIL_DOMAIN}"
+    echo "{l}{first}|${LAST_LETTER}${FIRST_NAME}@${EMAIL_DOMAIN}"
+    
+    # Name followed by letter
+    echo "{last}{f}|${LAST_NAME}${FIRST_LETTER}@${EMAIL_DOMAIN}"
+    echo "{first}{l}|${FIRST_NAME}${LAST_LETTER}@${EMAIL_DOMAIN}"
 }
 
 while read LINE
