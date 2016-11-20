@@ -15,6 +15,7 @@ IP_ADDRESS_LIST=$DOMAIN_DIRECTORY/a-record-ip-addresses.txt
 SUBDOMAIN_LIST=$DOMAIN_DIRECTORY/subdomains.txt
 CNAME_LIST=$DOMAIN_DIRECTORY/cnames.txt
 HTTP_SUBDOMAIN_LIST=$DOMAIN_DIRECTORY/http-subdomains.txt
+DNSTWIST_LIST=$DOMAIN_DIRECTORY/dnstwist.txt
 
 $DOMAIN_SCAN_SCRIPTS/run-domain-scan.sh \
     "$DOMAIN_TARGET" 15 $DOMAIN_SUBDOMAIN_LIST \
@@ -46,6 +47,13 @@ cat $SUBDOMAIN_LIST \
     > $HTTP_SUBDOMAIN_LIST
 
 echo -e "\t- Identified $(cat $HTTP_SUBDOMAIN_LIST | wc -l) subdomains that support HTTP(s)"
+
+echo ""
+echo "> Executing dnstwist scan on $DOMAIN_TARGET to find similar looking registered domains"
+
+$DOMAIN_SCAN_SCRIPTS/dnstwist.sh "$DOMAIN_TARGET" \
+     > "$DNSTWIST_LIST"
+
 
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
