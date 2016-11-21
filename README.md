@@ -34,6 +34,7 @@ The following tools to be cloned:
 - [TheHarvester](https://github.com/laramies/theHarvester)
 - [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
 - [wpscan](https://github.com/wpscanteam/wpscan)
+- [dnstwist](https://github.com/elceef/dnstwist)
 
 Battalion provides a script [download-tools](download-tools.sh) to automatically clone all of the required
 GitHub repositories. Additional setup is required after cloning the tools. Using this script allows Battalion to know where to look for the toolsr.
@@ -49,6 +50,7 @@ The following is the complete list of 3rd party tools leveraged by Battalion:
 - [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
 - [whois](https://github.com/weppos/whois)
 - [wpscan](https://github.com/wpscanteam/wpscan)
+- [dnstwist](https://github.com/elceef/dnstwist)
 
 ## Install on Kali Linux
 ```
@@ -59,11 +61,16 @@ cd battalion
 cd tools
 
 #dnsrecon
-
+cd dnsrecon
 pip install -r requirements.txt
-#Currently there is an issue (11/5/2016) which prevents `./dnsrecon` from running unless -t is specified.
 #Test functionality by using the following to trigger the help message
 ./dnsrecon -t
+cd ..
+
+#dnstwist
+cd dnstwist
+#Test functionality by using the following to trigger the help message
+./dnstwist
 cd ..
 
 #EyeWitness
@@ -109,6 +116,7 @@ Battalion also supports configuring the locations of tools via environment varia
 - `BATTALION_HARVESTER_HOME`
 - `BATTALION_WHATWEB_HOME`
 - `BATTALION_WPSCAN_HOME`
+- `BATTALION_DNSTWIST_HOME`
 
 # Using Battalion
 
