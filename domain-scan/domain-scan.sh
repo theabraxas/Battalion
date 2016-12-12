@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOMAIN_SCAN_SCRIPTS=$SCRIPT_DIRECTORY/domain-scan/scripts
+export DOMAIN_SCAN_SCRIPTS=$SCRIPT_DIRECTORY/domain-scan/scripts
 
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
