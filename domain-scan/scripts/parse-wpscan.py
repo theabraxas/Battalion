@@ -89,7 +89,6 @@ for i in theme_and_plugin_safe: #themes and plugins with no detected vulns _ plu
 		elif "out of date" in i:
 			jsonGenerator += '"Latest version" : "%s", ' % i.split("version is ")[2]
 	jsonGenerator = jsonGenerator[:-2] + '}, '
-	#print "\n"
 jsonGenerator = jsonGenerator[:-3] + '}'
 
 #############################################
@@ -117,7 +116,6 @@ if len(theme_and_plugin_vulns) > 1:
 		jsonGenerator2 = jsonGenerator2[:-2] + '}, '
 else:
 	jsonGenerator2 += 'none : "none"   '
-	print jsonGenerator2
 jsonGenerator2 = jsonGenerator2[:-2] + '}'
 
 #convert mixed dictionary to single dictionary
@@ -147,7 +145,6 @@ for j in generic_data_final: #Generic Data Output
 		elif "theme in use" in i:
 			WordpressThemeInUse = i.split(": ")[1]
 		elif "Interesting header" in i:
-			print i
 			headerdata = i.split(": ")[1:]
 			header = ""
 			for i in headerdata:
