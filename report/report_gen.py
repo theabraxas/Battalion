@@ -3,6 +3,8 @@ Author: toshi
 Description: Main class for Report Generation.abs
 """
 
+from json import JSONDecoder
+
 class ReportGen(object):
     """This is the main class for ReportGen
     """
@@ -28,6 +30,43 @@ class ReportGen(object):
         """Closes the file post ReportGeneration
         """
         cls.open_file.close()
+
+    @classmethod
+    def load_in_json(cls, raw_json):
+        """This is a helper method used to deserialize
+        JSON objects and transform and load them into
+        report_content_json
+
+        @raw_json: string representation of JSON
+        """
+        decoder = JSONDecoder()
+        decoded = decoder.decode(raw_json)
+
+        for key, value in decoded.items():
+            table_key = key #the first key is the name to pass in
+            tr_table = cls.transform_to_html_table(value)  # this needs to be parsed and transformed into a HTML table
+            cls.add_content_json(table_key, tr_table)
+
+
+    @classmethod
+    def transform_to_html_table(cls, json_dict):
+        """transforms the dictionary into html table
+
+        @json_dict: dict version of deocded json
+        @return: string of the html table
+        """
+        html_table = '<table class="table table-bordered table-striped"><tbody>'
+
+        for key, value in json_dict.items():
+            html_table += '<tr>'
+            html_table += '<td class="col-md-6">' + key + '</td>'
+            html_table += '<td class="col-md-6">' + value + '</td>'
+            html_table += '</tr>'
+
+        html_table += "</tbody></table>"
+
+        return html_table
+
 
     @classmethod
     def add_content_json(cls, name, content):
