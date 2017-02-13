@@ -4,7 +4,7 @@ WORDPRESS_DOMAINS=${1}
 
 # Make Ruby happy :(
 source ~/.rvm/scripts/rvm
-rvm use 2.3.1 >/dev/null 2>&1
+rvm use 2.3.3 >/dev/null 2>&1
 
 OLD_PWD=$(pwd)
 while read WP_DOMAIN; do
@@ -16,7 +16,7 @@ while read WP_DOMAIN; do
     if [ ! -z "$WP_DOMAIN" ]; then
         (>&2 echo -e "\t+ Running wpscan for domain [$WP_DOMAIN]")
         ruby wpscan.rb \
-            --batch --no-color --follow-redirection \
+            --batch --no-color --follow-redirection --no-banner \
             --url "$WP_DOMAIN" \
             > $RAW_OUTPUT
     fi

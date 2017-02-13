@@ -10,6 +10,6 @@ $NOW
 
 ## Human Intelligence Overview
 
-- Number of current or former employees identified: $(wc -l < $LINKEDIN_RESULTS)
+## Domain Intelligence Overview 
 
 EOF
