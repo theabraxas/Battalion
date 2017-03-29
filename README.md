@@ -6,119 +6,20 @@ Ultimately Battalion will automate beyond reconaissance and go so far as to trig
 
 Try out Battalion and send us any feedback! https://github.com/eidolonpg and I are excited to build out this tool and make it as comprehensive and efficient as possible!
 
+# Installation
 
-
-# Quick Setup
-
-Battalion depends on a number of other tools and many of these tools function from cloned Git repositories. Here is how to get started.
-
-Manually configure these tools on your system:
-
-- [Nmap](https://nmap.org/)
-- [whois](https://github.com/weppos/whois)
-
-The following command will prepare these tools on your system. This will not work on all systems.
-
-```bash
-apt-get install nmap
-apt-get install jq
-gem install whois
-```
-
-In addition to the above tools there are several more Battalion utilizes to run properly. Below are the tools which can be installed manually or with the [download-tools](download-tools.sh) script.
-
-The following tools to be cloned:
-
-- [dnsrecon](https://github.com/darkoperator/dnsrecon)
-- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
-- [TheHarvester](https://github.com/laramies/theHarvester)
-- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
-- [wpscan](https://github.com/wpscanteam/wpscan)
-- [dnstwist](https://github.com/elceef/dnstwist)
-
-Battalion provides a script [download-tools](download-tools.sh) to automatically clone all of the required
-GitHub repositories. Additional setup is required after cloning the tools. Using this script allows Battalion to know where to look for the toolsr.
-
-Once cloned, navigate in to each directory and install the requirements for each tool and validate the tool works. If these tools are all working, Battalion will run properly. This will typically just involve going in to each tool directory and running: `pip install -r requirements.txt`
-
-The following is the complete list of 3rd party tools leveraged by Battalion:
-
-- [dnsrecon](https://github.com/darkoperator/dnsrecon)
-- [EyeWitness](https://github.com/ChrisTruncer/EyeWitness)
-- [Nmap](https://nmap.org/)
-- [TheHarvester](https://github.com/laramies/theHarvester)
-- [WhatWeb](https://github.com/urbanadventurer/WhatWeb)
-- [whois](https://github.com/weppos/whois)
-- [wpscan](https://github.com/wpscanteam/wpscan)
-- [dnstwist](https://github.com/elceef/dnstwist)
-
-## Install on Kali Linux
-```
-apt-get install jq
-git clone https://github.com/battalion
-cd battalion
-./download-tools.sh
-cd tools
-
-#dnsrecon
-cd dnsrecon
-pip install -r requirements.txt
-#Test functionality by using the following to trigger the help message
-./dnsrecon -t
-cd ..
-
-#dnstwist
-cd dnstwist
-#Test functionality by using the following to trigger the help message
-./dnstwist
-cd ..
-
-#EyeWitness
-cd EyeWitness/setup
-./setup.sh
-cd ..
-#Test functionality by typing the following to trigger the help message
-./EyeWitness.py
-cd ..
-
-#theHarvester
-chmod +x theHarvester.py
-#Test functionality by typing the following to trigger the help message
-./theHarvester.py
-cd ..
-
-#WhatWeb
-#This should work by default. Test functionality by typing the following to trigger the help message
-./whatweb
-cd ..
-
-#wpscan
-sudo apt-get install libcurl4-openssl-dev libxml2 libxml2-dev libxslt1-dev ruby-dev build-essential libgmp-dev zlib1g-dev
-cd wpscan
-unzip data.zip
-#Test functionality by typing the following to trigger the help message
-./wpscan.rb
-cd ../..
-
-#Ruby Whois
-gem install whois
-```
-
-Battalion should now be ready to run on your Kali system!
-
-
-## Using your own tool installations
-
-Battalion also supports configuring the locations of tools via environment variables:
-
-- `BATTALION_DNSRECON_HOME`
-- `BATTALION_EYEWITNESS_HOME`
-- `BATTALION_HARVESTER_HOME`
-- `BATTALION_WHATWEB_HOME`
-- `BATTALION_WPSCAN_HOME`
-- `BATTALION_DNSTWIST_HOME`
+Battalion depends on a number of tools - please see the primary documentation in the [Battalion Installation Guide](INSTALL.md) for more information. This distribution also includes scripts for some system types in the `install` directory. The installation documentation provides more information on these scripts.
 
 # Using Battalion
+
+## Example: Scanning a Domain and Users
+
+```bash
+$ ./battalion.sh --name "Test Scan" --out /home/user/scans/company \
+    --company "My Company" --domain "company.com" --nmap
+```
+
+This scan for `My Company` will produce results in the directory `/home/user/scans/company`. The domain scan would be based on the specified domain `company.com`, whereas the user scan is based upon the company name `My Company`. This scan also enables a light Nmap scan on the detected domains.
 
 ## Required Parameters for All Scans
 
@@ -135,42 +36,31 @@ Battalion also supports configuring the locations of tools via environment varia
 
 ## Optional Parameters
 
-- `--email-domain <domain name>`: Allows a different email domain to be configured
-- `--subdomain-list <file>`: Specify a file that provides potential subdomains
+- `--email-domain <domain name>`: Allows a different email domain to be configured. Use this if the primary domain is `x.com` but users receive mail at `y.com` addresses.
+- `--subdomain-list <file>`: Specify a file that provides potential subdomains, this is used by the dnsrecon tool. That tool provides some high-quality default lists.
 - `--nmap`: Enable light touch nmap scanning of subdomains
-- `--nmap-aggressive`: This is a VERY intense scan on each subdomain, approx ~10 minutes per subdomain. VERY LONG TO RUN.
+- `--nmap-aggressive`: (Long running!) This is a VERY intense scan on each subdomain, approximately 10 minutes per subdomain.
 - `--shodan <api key>`: Specify a Shodan API key and enables a Shodan scan
 - `--hunter <api key>`: Sets a Hunter.io API Key and enables Hunter in the user scan. This will vastly speed up the user scan!
 - `--timeout-http <seconds>`: Specify a timeout in seconds for HTTP detection
 - `--timeout-eyewitness <seconds>`: Specify a timeout in seconds for EyeWitness individual scans
 
-## Disabling Scans
+## Disabling Major Scan Types
 
 - `--disable-user`: Disable the user scan
 - `--disable-domain`: Disable the domain scan
 
-## Sample Scan
-
-`./battalion.sh --name TestScan --out /path/to/destination/directory --company "Company Name" --domain "example.com" --nmap --shodan "shodanAPIkey"`
-This would create a new scan called 'TestScan' and put the results of the scan at /path/to/destionation/directory/<files>. It would scan `example.com` with the domain-scan features and do a user-scan on "Company Name" the NMAP and Shodan modules are enabled in this sample.
-
 # Scan Output
 
-Battalion produces a number of directories which help categorize raw output. It also produces
-a directory called `report` which will contain a Markdown report summarizing and organizing the output.
-All of these directories will be created at the location specified by the `--out` parameter and do
-not need to be created.
+Battalion produces a number of directories which help categorize raw output. All of these directories will be created at the location specified by the `--out` parameter by the Battalion script.
 
 ## Expected Scan Time (User)
 
-The current scan time for the user scan is rather large -- over 20 minutes. We're currently working
-on a way to improve this by changing how Battalion identifies email addresses.
+The current default scan time for the user scan is rather large -- over 20 minutes. We recomment acquiring a [Hunter](https://hunter.io) API key to expidite this process.
 
 ## Expected Scan Time (Domain)
 
-Scans depend very much on the 'size' of the target, where the size is deteremined by the number of
-users and the number of detected domain records. Even for small targets scans will normally take a
-few minutes to complete.
+Scans depend very much on the 'size' of the target, where the size is deteremined by the number of users and the number of detected domain records. Small targets usually take at least a few minutes to complete.
 
 # Disclaimer
 

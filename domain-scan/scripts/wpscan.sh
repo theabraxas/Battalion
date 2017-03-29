@@ -2,10 +2,6 @@
 
 WORDPRESS_DOMAINS=${1}
 
-# Make Ruby happy :(
-source ~/.rvm/scripts/rvm
-rvm use 2.3.1 >/dev/null 2>&1
-
 OLD_PWD=$(pwd)
 while read WP_DOMAIN; do
     RAW_OUTPUT=$WORDPRESS_DIRECTORY/$WP_DOMAIN.txt
