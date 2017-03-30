@@ -32,7 +32,7 @@ class ReportGen(object):
         cls.open_file.close()
 
     @classmethod
-    def load_in_json(cls, raw_json):
+    def load_in_json(cls, raw_json, is_array):
         """This is a helper method used to deserialize
         JSON objects and transform and load them into
         report_content_json
@@ -44,24 +44,45 @@ class ReportGen(object):
 
         for key, value in decoded.items():
             table_key = key #the first key is the name to pass in
-            tr_table = cls.transform_to_html_table(value)  # this needs to be parsed and transformed into a HTML table
+            tr_table = cls.transform_to_html_table(value, is_array)  # this needs to be parsed and transformed into a HTML table
             cls.add_content_json(table_key, tr_table)
 
 
     @classmethod
-    def transform_to_html_table(cls, json_dict):
+    def transform_to_html_table(cls, json_dict, is_array):
         """transforms the dictionary into html table
 
         @json_dict: dict version of deocded json
         @return: string of the html table
         """
-        html_table = '<table class="table table-bordered table-striped"><tbody>'
+        html_table = '<table class="table table-bordered table-striped">'
 
-        for key, value in json_dict.items():
-            html_table += '<tr>'
-            html_table += '<td class="col-md-6">' + key + '</td>'
-            html_table += '<td class="col-md-6">' + value + '</td>'
-            html_table += '</tr>'
+        if is_array:
+            html_table += '<thead>'
+            array_data = ''
+            array_header = '<tr>'
+            table_keys = set()
+            for json_item in json_dict:
+                array_data += '<tr>'
+                for key, value in json_item.items():
+                    if key not in table_keys:
+                        table_keys.add(key)
+                        array_header += '<th>' + key + '</th>'
+                    array_data += '<td>' + value + '</td>'
+                array_data += '</tr>'
+            array_header += '</tr>'
+            html_table += array_header
+            html_table += '</thead>'
+            html_table += '<tbody>'
+            html_table += array_data
+
+        else:
+            html_table += '<tbody>'
+            for key, value in json_dict.items():
+                html_table += '<tr>'
+                html_table += '<td class="col-md-6">' + key + '</td>'
+                html_table += '<td class="col-md-6">' + value + '</td>'
+                html_table += '</tr>'
 
         html_table += "</tbody></table>"
 
@@ -185,37 +206,7 @@ class ReportGen(object):
                                 <b>Domain</b>
                             </div>
                             <div class="panel-body">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Domain</th>
-                                            <th>Target</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>A</td>
-                                            <td>mail.abraxas.io</td>
-                                            <td>104.28.22.92</td>
-                                        </tr>
-                                        <tr>
-                                            <td>A</td>
-                                            <td>media.abraxas.io</td>
-                                            <td>98.176.95.77</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CNAME</td>
-                                            <td>jira.abraxas.io</td>
-                                            <td>taint.asuscomm.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>CNAME</td>
-                                            <td>ts.abraxas.io</td>
-                                            <td>ts3.abraxas.io</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                {domainRecords}
                             </div>
                         </div>
                         <div class="panel panel-default">
