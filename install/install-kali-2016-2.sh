@@ -4,6 +4,9 @@ sudo apt-get install jq nmap libgeoip-dev libffi-dev libcurl4-openssl-dev libxml
 
 pip install requests
 
+cd ..
+./download-tools.sh
+
 cd tools/dnsrecon
 pip install -r requirements.txt
 
