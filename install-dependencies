@@ -18,6 +18,12 @@ INSTALL_TARGET="$1"
 
 if [ -z "${INSTALL_TARGET}" ]; then
     echo "[Error] Please specify a target platform."
+    echo ""
+    echo "Usage: ./install.sh <target>"
+    echo ""
+    echo "Available Targets:"
+    echo "ubuntu, kali-2016-2"
+
     exit 1
 fi
 
@@ -26,5 +32,5 @@ if [ "$INSTALL_TARGET" = "--help" ]; then
     exit 0
 fi
 
-$SCRIPT_DIRECTORY/install/download-tools.sh
+$SCRIPT_DIRECTORY/install/download-tools.sh "$SCRIPT_DIRECTORY"
 $SCRIPT_DIRECTORY/install/install-${INSTALL_TARGET}.sh "$SCRIPT_DIRECTORY"
