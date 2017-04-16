@@ -1,8 +1,8 @@
-Battalion Installation Guide
-============================
+Battalion Dependency Installation Guide
+=======================================
 
 This guide is intended to detail the required tools and steps to install all of the
-tools required by Battalion.
+tools and dependencies required by Battalion.
 
 # Target Operating Systems
 
@@ -10,16 +10,24 @@ This guide is currently targeted towards Ubuntu-based Linux distributions. The g
 
 # About the Installation Scripts
 
-The provided installation scripts consolidate the procedure outlined here. These scripts assume that the current user has `sudo` access and starts within the desired directory. Please keep in mind that _installation requires sudo access_. We recommend reading the script for your distribution along with any tool-provided scripts so you understand what you're executing.
+The provided installation scripts consolidate the procedure outlined here. These scripts assume that the current user has `sudo` access and starts within the desired directory. Please keep in mind that _dependency installation requires sudo access_. We recommend reading the script for your distribution along with any tool-provided scripts so you understand what you're executing.
 
 ## What do the scripts _not_ provide?
 
 These scripts assume you will setup and manage your own Ruby and Python versions, and as such do not automatically install these packages.
 
+## Top-Level Script
+
+```bash
+$ git clone https://github.com/theabraxas/Battalion.git
+$ cd Battalion
+$ ./install-dependencies <target>
+```
+
 ## Supported Distributions
 
-- [Ubuntu](install/install-ubuntu.sh)
-- [Kali 2016.2](install/install-kali-2016-2.sh)
+- [Ubuntu](install/install-ubuntu.sh): `./install-dependencies ubuntu`
+- [Kali 2016.2](install/install-kali-2016-2.sh): `./install-dependencies kali-2016-2`
 
 # Scanning Tools
 
