@@ -19,7 +19,11 @@ $USER_SCAN_SCRIPTS/possible-emails.sh "$EMAIL_DOMAIN" \
     > $POSSIBLE_EMAILS
 
 touch $COMPROMISED_STYLE
-if $HUNTER_ENABLED; then
+if [ ! -z "$SPECIFIED_EMAIL_FORMAT" ]; then
+    # The user has specified an email format. Hunter and scanning are both disabled.
+    echo -e "> User has specified email style '$SPECIFIED_EMAIL_FORMAT'"
+    echo "$SPECIFIED_EMAIL_FORMAT" > $COMPROMISED_STYLE
+elif $HUNTER_ENABLED; then
     # The user has chosen to use Hunter. Rather than scan using HIBP we'll
     # just look up the best pattern.
     echo -e "> Attempting to identify compromised email style based on Hunter.io."
