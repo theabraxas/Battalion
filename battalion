@@ -18,6 +18,7 @@ usage() {
     echo "    --email-domain       <domain>  Used to set an email domain name (default is domain name)."
     echo "    --email-format       <format>  Used to set an email format. This prevents discovery"
     echo "                                   tasks from running and greatly increases scan speed."
+    echo "                                   Formats will look {first}.{l} for 'firstname.lastinitial' formats."
     echo "    --nmap                         If this flag is set, Nmap scanning is added to the domain scan."
     echo "    --nmap-aggressive              If this flag is set, aggressive Nmap scanning is enabled for the domain."
     echo "    --shodan             <api key> Sets a Shodan API Key and adds Shodan to the domain scan."
@@ -40,7 +41,7 @@ usage() {
 }
 
 usage_short() {
-    echo "Usage: battalion --name <name> --out <dir> --domain <domain> --company <company> [optional parameters] [--help]"
+    echo "Usage: battalion --name <name> --out <dir> --domain <domain> --company <company> --email-domain <domain> [optional parameters] [--help]"
     echo "Please use --help for more information."
 }
 
