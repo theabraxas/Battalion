@@ -6,6 +6,8 @@ this may become the stub for unit test
 """
 
 from report_gen import ReportGen
+from nmap_data_builder import NMapDataBuilder
+from os import walk
 
 TESTJSON = """{"whois" :
     {
@@ -40,10 +42,20 @@ TESTJSONARRAY = """{
   ]
 }"""
 
+NMAPPER = NMapDataBuilder()
+hard_path = '/home/toshi/Git/Battalion/scans/scanz'
+
+for (dirpath, dirnames, filenames) in walk(hard_path + '/nmap'):
+    for filename in filenames:
+        if filename.endswith('.xml'):
+            NMAPPER.read_in_file(dirpath + '/' + filename)
+
 RG = ReportGen()
 
 RG.load_in_json(TESTJSON, False)
 
 RG.load_in_json(TESTJSONARRAY, True)
+
+RG.load_in_json(NMAPPER.transform_to_json(), True)
 
 RG.report_generation("testReport.html")

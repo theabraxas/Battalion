@@ -43,48 +43,56 @@ class ReportGen(object):
         decoded = decoder.decode(raw_json)
 
         for key, value in decoded.items():
-            table_key = key #the first key is the name to pass in
-            tr_table = cls.transform_to_html_table(value, is_array)  # this needs to be parsed and transformed into a HTML table
+            table_key = key #the key is the name to pass in
+            if is_array:
+                tr_table = cls.jsonarray_to_html_table(value)  # this needs to be parsed and transformed into a HTML table
+            else:
+                tr_table = cls.json_to_html_table(value)
             cls.add_content_json(table_key, tr_table)
 
+    @classmethod
+    def jsonarray_to_html_table(cls, json_array):
+        """transforms the json array into html table
+
+        @json_dict: dict version of deocded json
+        @return: string of the html table
+        """
+
+        html_table = '<table class="table table-bordered table-striped"><thead>'
+        array_data = ''
+        array_header = '<tr>'
+        table_keys = set()
+        
+        for json_item in json_array:
+            array_data += '<tr>'
+            for key, value in json_item.items():
+                if key not in table_keys:
+                    table_keys.add(key)
+                    array_header += '<th>' + key + '</th>'
+                array_data += '<td>' + value + '</td>'
+            array_data += '</tr>'
+
+        array_header += '</tr>'
+        html_table += array_header + '</thead><tbody>' + array_data + '</tbody></table>'
+
+        return html_table
 
     @classmethod
-    def transform_to_html_table(cls, json_dict, is_array):
+    def json_to_html_table(cls, json_dict):
         """transforms the dictionary into html table
 
         @json_dict: dict version of deocded json
         @return: string of the html table
         """
-        html_table = '<table class="table table-bordered table-striped">'
+        html_table = '<table class="table table-bordered table-striped"><tbody>'
+        
+        for key, value in json_dict.items():
+            html_table += '<tr>'
+            html_table += '<td class="col-md-6">' + key + '</td>'
+            html_table += '<td class="col-md-6">' + value + '</td>'
+            html_table += '</tr>'
 
-        if is_array:
-            html_table += '<thead>'
-            array_data = ''
-            array_header = '<tr>'
-            table_keys = set()
-            for json_item in json_dict:
-                array_data += '<tr>'
-                for key, value in json_item.items():
-                    if key not in table_keys:
-                        table_keys.add(key)
-                        array_header += '<th>' + key + '</th>'
-                    array_data += '<td>' + value + '</td>'
-                array_data += '</tr>'
-            array_header += '</tr>'
-            html_table += array_header
-            html_table += '</thead>'
-            html_table += '<tbody>'
-            html_table += array_data
-
-        else:
-            html_table += '<tbody>'
-            for key, value in json_dict.items():
-                html_table += '<tr>'
-                html_table += '<td class="col-md-6">' + key + '</td>'
-                html_table += '<td class="col-md-6">' + value + '</td>'
-                html_table += '</tr>'
-
-        html_table += "</tbody></table>"
+        html_table += '</tbody></table>'
 
         return html_table
 
@@ -223,6 +231,14 @@ class ReportGen(object):
                             </div>
                             <div class="panel-body">
                                 {whois}
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>NMap</b>
+                            </div>
+                            <div class="panel-body">
+                                {nmap}
                             </div>
                         </div>
                     </div>
