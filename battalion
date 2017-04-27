@@ -16,6 +16,9 @@ usage() {
     echo "Optional Parameters:"
     echo "    --subdomain-list     <file>    File containing subdomains to verify."
     echo "    --email-domain       <domain>  Used to set an email domain name (default is domain name)."
+    echo "    --email-format       <format>  Used to set an email format. This prevents discovery"
+    echo "                                   tasks from running and greatly increases scan speed."
+    echo "                                   Formats will look {first}.{l} for 'firstname.lastinitial' formats."
     echo "    --nmap                         If this flag is set, Nmap scanning is added to the domain scan."
     echo "    --nmap-aggressive              If this flag is set, aggressive Nmap scanning is enabled for the domain."
     echo "    --shodan             <api key> Sets a Shodan API Key and adds Shodan to the domain scan."
@@ -32,13 +35,13 @@ usage() {
     echo ""
     echo "Subdomain Lists:"
     echo -n "The subdomain list file is used to specify potential subdomains to test to see if they exist."
-    echo -n "You can generate a file yourself, or you can use a premade file. The dnsrecon tool that Battalion"
+    echo -n "You can generate a file yourself, or you can use a premade file. The dnsrecon tool that Battalion "
     echo -n -e "uses to perform these scans provides lists that we recommend utilizing.\n"
     echo ""
 }
 
 usage_short() {
-    echo "Usage: battalion --name <name> --out <dir> --domain <domain> --company <company> [optional parameters] [--help]"
+    echo "Usage: battalion --name <name> --out <dir> --domain <domain> --company <company> --email-domain <domain> [optional parameters] [--help]"
     echo "Please use --help for more information."
 }
 
@@ -115,6 +118,10 @@ do
             ;;
         --email-domain)
             EMAIL_DOMAIN="$2"
+            shift
+            ;;
+        --email-format)
+            SPECIFIED_EMAIL_FORMAT="$2"
             shift
             ;;
         --help)
@@ -242,6 +249,7 @@ if $USER_SCAN_ENABLED ; then
     export COMPROMISED_STYLE=${SCAN_DIRECTORY}/user/compromised-style.txt
     export PROBABLE_EMAILS=${SCAN_DIRECTORY}/user/probable-emails.txt
     export COMPROMISED_EMAILS=${SCAN_DIRECTORY}/user/compromised-emails.txt
+    export SPECIFIED_EMAIL_FORMAT
 
     $SCRIPT_DIRECTORY/user-scan/user-scan.sh &
     USER_SCAN_PID=$!
