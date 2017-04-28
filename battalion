@@ -278,6 +278,18 @@ fi
 
 # 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Time for Report Generation!
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+
+#Copy files needed for reports to the report folder
+
+cp -R $SCRIPT_DIRECTORY/report/bs $SCAN_DIRECTORY/report/.
+python3 $SCRIPT_DIRECTORY/report/reports.py $SCAN_DIRECTORY
+firefox $SCAN_DIRECTORY/report/battalionReport.html
+
+# 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Part X - Complete!
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 

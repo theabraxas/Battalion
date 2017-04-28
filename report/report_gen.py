@@ -133,98 +133,15 @@ class ReportGen(object):
                     <p><i>Key to cyber warfare is information</i></p>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a data-toggle="tab" href="#nav1">Summary</a></li>
-                    <li role="presentation"><a data-toggle="tab" href="#nav2">User</a></li>
-                    <li role="presentation"><a data-toggle="tab" href="#nav3">Domain</a></li>
+                    <li role="presentation" class="active"><a data-toggle="tab" href="#nav1">Whois</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#nav2">Domain</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#nav3">nmap</a></li>
+                    <li role="presentation"><a data-toggle="tab" href="#nav4">WhatWeb</a></li>
                 </ul>
             </div>
             <div class="panel-body">
                 <div class="tab-content">
                     <div id="nav1" class="tab-pane fade in active">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Summary</b>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span class="badge">65</span><a href="#user-scan-result">Total Users Scanned</a></li>
-                                    <li class="list-group-item"><span class="badge">14</span><a href="#user-scan-result">Compromised Users</a></li>
-                                    <li class="list-group-item"><span class="badge">12</span><a href="#domain-scan-result">Total Domains Scanned</a></li>
-                                    <li class="list-group-item"><span class="badge">31</span><a href="#domain-scan-result">DNS Records Found</a></li>
-                                    <li class="list-group-item"><span class="badge">32</span><a href="#domain-scan-result">Subdomains Found</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="nav2" class="tab-pane fade">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>User Scan Results</b>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span class="badge">65</span><a href="#user-scan-result">Total Users</a></li>
-                                    <li class="list-group-item"><span class="badge">14</span><a href="#user-scan-result">Compromised Users</a></li>
-                                    <li class="list-group-item"><span class="badge">45</span><a href="#user-scan-result">LinkedIn Profiles Found</a></li>
-                                    <li class="list-group-item"><span class="badge">20</span><a href="#user-scan-result">Facebook Profiles Found</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Compromised Emails</b>
-                            </div>
-                            <div class="panel-body">
-
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>LinkedIn</b>
-                            </div>
-                            <div class="panel-body">
-
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Facebook</b>
-                            </div>
-                            <div class="panel-body">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="nav3" class="tab-pane fade">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Domain Scan Results</b>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item"><span class="badge">4</span><a href="#domain-scan-result">Total Domains</a></li>
-                                    <li class="list-group-item"><span class="badge">4</span><a href="#domain-scan-result">DNS Records</a></li>
-                                    <li class="list-group-item"><span class="badge">4</span><a href="#domain-scan-result">Subdomains</a></li>
-                                    <li class="list-group-item"><span class="badge">2</span><a href="#domain-scan-result">External IPs Found</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Domain</b>
-                            </div>
-                            <div class="panel-body">
-                                {domainRecords}
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>WhatWeb</b>
-                            </div>
-                            <div class="panel-body">
-
-                            </div>
-                        </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <b>Whois</b>
@@ -233,12 +150,34 @@ class ReportGen(object):
                                 {whois}
                             </div>
                         </div>
+                    </div>
+                    <div id="nav2" class="tab-pane fade">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <b>NMap</b>
+                                <b>Domain</b>
+                            </div>
+                            <div class="panel-body">
+                                {domainRecords}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nav3" class="tab-pane fade">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>nmap</b>
                             </div>
                             <div class="panel-body">
                                 {nmap}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nav4" class="tab-pane fade">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>WhatWeb</b>
+                            </div>
+                            <div class="panel-body">
+                                Coming Soon!
                             </div>
                         </div>
                     </div>
