@@ -15,6 +15,7 @@ usage() {
     echo ""
     echo "Optional Parameters:"
     echo "    --subdomain-list     <file>    File containing subdomains to verify."
+    echo "    --whitelist          <file>    File containing IP whitelist."
     echo "    --email-domain       <domain>  Used to set an email domain name (default is domain name)."
     echo "    --email-format       <format>  Used to set an email format. This prevents discovery"
     echo "                                   tasks from running and greatly increases scan speed."
@@ -37,6 +38,10 @@ usage() {
     echo -n "The subdomain list file is used to specify potential subdomains to test to see if they exist."
     echo -n "You can generate a file yourself, or you can use a premade file. The dnsrecon tool that Battalion "
     echo -n -e "uses to perform these scans provides lists that we recommend utilizing.\n"
+    echo ""
+    echo "IP Whitelist:"
+    echo -n "The IP Whitelist file is used to specify IP addresses (one per line) allowed"
+    echo -n "for scanning. All domain-level scans after the initial domain scan are affected."
     echo ""
 }
 
@@ -86,6 +91,10 @@ do
             ;;
         --subdomain-list)
             DOMAIN_SUBDOMAIN_LIST="$2"
+            shift
+            ;;
+        --whitelist)
+            IP_WHITELIST_FILE="$2"
             shift
             ;;
         --timeout-http)
@@ -143,6 +152,7 @@ export SHODAN_API_KEY
 export HUNTER_API_KEY
 export COMPANY_NAME
 export DOMAIN_SUBDOMAIN_LIST=${DOMAIN_SUBDOMAIN_LIST:-$BATTALION_DNSRECON_HOME/subdomains-top1mil-20000.txt}
+export IP_WHITELIST_FILE
 export DOMAIN_HTTP_SCAN_TIMEOUT=${DOMAIN_HTTP_SCAN_TIMEOUT:-3}
 export EYEWITNESS_TIMEOUT=${EYEWITNESS_TIMEOUT:-15}
 export NMAP_ENABLED=${NMAP_ENABLED:-false}

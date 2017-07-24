@@ -3,7 +3,7 @@
 export SCRIPT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 usage() {
-    echo "Usage: ./install.sh <target>"
+    echo "Usage: ./install-dependencies <target>"
     echo ""
     echo "Available Targets:"
     echo "ubuntu, kali-2016-2"
