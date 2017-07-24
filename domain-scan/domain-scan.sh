@@ -10,6 +10,9 @@ export DOMAIN_SCAN_SCRIPTS=$SCRIPT_DIRECTORY/domain-scan/scripts
 echo "> Executing domain scan on $DOMAIN_TARGET using subdomain list $DOMAIN_SUBDOMAIN_LIST"
 
 BASE_DOMAIN_REPORT=$DOMAIN_DIRECTORY/base-domain-report.txt
+FULL_DOMAIN_REPORT=$DOMAIN_DIRECTORY/backup-domain-report.txt
+WHITELISTED_RECORDS=$DOMAIN_DIRECTORY/whitelisted-records.txt
+REJECTED_RECORDS=$DOMAIN_DIRECTORY/rejected-records.txt
 A_RECORD_LIST=$DOMAIN_DIRECTORY/a-records.txt
 IP_ADDRESS_LIST=$DOMAIN_DIRECTORY/a-record-ip-addresses.txt
 SUBDOMAIN_LIST=$DOMAIN_DIRECTORY/subdomains.txt
@@ -20,6 +23,21 @@ DNSTWIST_LIST=$DOMAIN_DIRECTORY/dnstwist.txt
 $DOMAIN_SCAN_SCRIPTS/run-domain-scan.sh \
     "$DOMAIN_TARGET" 15 $DOMAIN_SUBDOMAIN_LIST \
     > $BASE_DOMAIN_REPORT
+
+# Apply the IP whitelist if necessary
+if [ ! -z $IP_WHITELIST_FILE ] && [ -f $IP_WHITELIST_FILE ]; then
+    echo ""
+    echo "> Applying IP Whitelist from file $IP_WHITELIST_FILE"
+
+    touch $WHITELISTED_RECORDS
+    touch $REJECTED_RECORDS
+
+    python $DOMAIN_SCAN_SCRIPTS/apply-whitelist.py \
+        $BASE_DOMAIN_REPORT $IP_WHITELIST_FILE $WHITELISTED_RECORDS $REJECTED_RECORDS
+
+    cp -f $BASE_DOMAIN_REPORT $FULL_DOMAIN_REPORT
+    cp -f $WHITELISTED_RECORDS $BASE_DOMAIN_REPORT
+fi
 
 # Produce a list of only the A records
 $DOMAIN_SCAN_SCRIPTS/filter-a-records.sh $BASE_DOMAIN_REPORT \
