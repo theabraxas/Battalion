@@ -7,7 +7,7 @@ export DOMAIN_SCAN_SCRIPTS=$SCRIPT_DIRECTORY/domain-scan/scripts
 # Part 1 - dnsrecon domain scan
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
-echo "> Executing domain scan on $DOMAIN_TARGET using subdomain list $DOMAIN_SUBDOMAIN_LIST"
+echo "> Executing domain scan on $DOMAIN_TARGET using subdomain list $DOMAIN_SUBDOMAIN_LIST. This may take awhile, there is no stdout during this phase"
 
 BASE_DOMAIN_REPORT=$DOMAIN_DIRECTORY/base-domain-report.txt
 FULL_DOMAIN_REPORT=$DOMAIN_DIRECTORY/backup-domain-report.txt
