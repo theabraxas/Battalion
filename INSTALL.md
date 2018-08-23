@@ -16,7 +16,7 @@ The provided installation scripts consolidate the procedure outlined here. These
 
 These scripts assume you will setup and manage your own Ruby and Python versions, and as such do not automatically install these packages.
 
-## Top-Level Script
+## Automatic Installation Script
 
 ```bash
 $ git clone https://github.com/theabraxas/Battalion.git
@@ -43,7 +43,7 @@ Battalion leverages the following tools:
 - [wpscan](https://github.com/wpscanteam/wpscan)
 - [dnstwist](https://github.com/elceef/dnstwist)
 
-# Installation Steps
+# Manual Installation Steps
 
 ## Clone Battalion and Clone Tools
 
