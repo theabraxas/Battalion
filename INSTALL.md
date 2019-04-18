@@ -20,6 +20,7 @@ These scripts assume you will setup and manage your own Ruby and Python versions
 
 ```bash
 $ git clone https://github.com/theabraxas/Battalion.git
+$ apt install gem
 $ cd Battalion
 $ ./install-dependencies <target>
 ```
