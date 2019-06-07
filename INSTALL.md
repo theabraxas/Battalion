@@ -51,7 +51,7 @@ Battalion leverages the following tools:
 The [download-tools.sh](download-tools.sh) script provided by Battalion will clone all of the required tools from GitHub and check out the appropriate tagged version.
 
 ```bash
-$ git clone https://github.com/theabraxas/Battalion.git
+$ git clone https://github.com/theabraxas/Battalion
 $ cd Battalion
 $ ./download-tools.sh
 ```
